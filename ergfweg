@@ -1,0 +1,102 @@
+#punto 1
+library(wooldridge)
+View(wage1)
+#nombrar variables
+
+educ<-wage1$educ
+salario<-wage1$wage
+lnsalario<-wage1$lwage
+restax<-(educ-mean(educ))
+restay<-(salario-mean(salario))
+varx<-(restax)^2
+restayLn<-(lnsalario-mean(lnsalario))
+MeanyLn<-(mean(lnsalario))
+
+#Hallar parametros
+mean(educ)
+mean(salario)
+
+#B1
+b1<-sum(restax*restay)/sum(varx)
+#B0
+b0<-(mean(salario)-b1*mean(educ))
+
+#Parametros Ln
+#B1Ln
+b1Ln<-sum(restax*restayLn)/sum(varx)
+#B0Ln
+boLn<-(MeanyLn-b1Ln*mean(educ))
+
+#1.2
+reg1<-lm(salario~educ)
+summary(reg1)
+reg2<-lm(lnsalario~educ)
+summary(reg2)
+
+#1.4
+Trm<-(4311.80)
+Conversion<-(b1*Trm)
+
+#Punto 2
+
+#punto2.1
+reg2_1<-lm(wage~female,data=wage1)
+summary(reg2_1)
+
+#punto2.2
+reg2_1<-lm(wage~female,data=wage1)
+summary(reg2_1)
+
+reg2_2<-lm(wage~female+educ,data=wage1)
+summary(reg2_2)
+
+reg2_3<-lm(wage~female+educ+I(educ*female),data=wage1)
+summary(reg2_3)
+
+
+#Punto 3 
+library(wooldridge)
+View(econmath)
+reg3_0<-lm(colgpa~calculus,data = econmath)
+summary(reg3_0)
+reg3_1<-lm(onmcolgpa~age+work+study+calculus,data=ecath)
+summary(reg3_1)
+reg3_2<-lm(colgpa~male+fathcoll+mothcoll,data=econmath)
+summary(reg3_2)
+reg3_3<-lm(colgpa~fathcoll+mothcoll+I(mothcoll*fathcoll),data=econmath)
+summary(reg3_3)
+reg3_4<-lm(colgpa~male+mothcoll,data=econmath)
+summary(reg3_4)
+reg3_5<-lm(colgpa~age+mothcoll+calculus+study+work+I(study*work),data = econmath)
+summary(reg3_5)
+modelos<-list("modelo1"=reg3_0, "modelo2"=reg3_1,
+             "modelo6" =reg3_5)
+modelsummary::modelsummary(modelos, stars = T)
+
+#punto4
+library(wooldridge)
+View(wage1)
+#4.1
+reg4<-lm(wage~educ+exper, data = wage1)
+summary(reg4)
+#4.2
+reg4_1<-lm(educ~exper,data=wage1)
+summary(reg4_1)
+residuos<-reg4_1$residuals
+#4.3
+reg4_2<-lm(wage~residuos,data=wage1)
+summary(reg4_2)
+
+
+
+
+
+
+#punto6
+table(geih$estado_laboral)
+table(geih$sector)
+library(dplyr)
+library(fastDummies)
+geih<-geih|>mutate(exp_pot=edad-18)
+reg6<-lm(salario_mes~edu_anios+exp_pot+I(exp_pot^2),data=geih)
+summary(reg6)
