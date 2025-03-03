@@ -1,0 +1,46 @@
+library(tidyverse)
+library(plm)
+library(dplyr)
+
+
+hogar <- read_delim("C:/Users/Prsala404/Desktop/sapa/CSV/Características generales,
+                    seguridad social en salud y educación.CSV")
+fuerza<- read_delim("C:/Users/Prsala404/Desktop/sapa/CSV/Fuerza de trabajo.CSV") 
+
+View(hogar)
+View(fuerza)
+
+hogar<- hogar |>select(c("PER", "DIRECTORIO", "SECUENCIA_P", "ORDEN", "P3271", "CLASE",
+               "P6040", "P3042", "P6070")) |>
+  rename(year = PER,
+         id_vivienda = DIRECTORIO,
+         id_hogar_viv = SECUENCIA_P,
+         id_ind_hogar_viv = ORDEN,
+         sexo = P3271,
+         rural_urbano = CLASE,
+         edad = P6040,
+         educ = P3042,
+         estado_civil = P6070) |>
+  mutate(sexo = ifelse(sexo == 1, "M" , "F"),
+         rural_urbano = ifelse(rural_urbano == 1, "Ur", "Ru"),
+         educ = case_when(
+           educ == 1 ~ "ninguno",
+           educ == 2 ~ "preescolar",
+           educ == 3 ~ "bas_primaria",
+           educ == 4 ~ "bas_sec",
+           educ == 5 ~ "media_acad",
+           educ == 6 ~ "media_tec",
+           educ == 7 ~ "normalista",
+           educ == 8 ~ "tec_prof",
+           educ == 9 ~ "tecnolog",
+           educ == 10 ~ "univ",
+           educ == 11 ~ "especi",
+           educ == 12 ~ "maestria",
+           educ == 13 ~ "phd",
+           TRUE ~ NA
+           
+         ))
+
+
+       
+ACORDARSE DE DE LO DE LA CONSOLA. cd , dir. desktop
