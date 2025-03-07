@@ -44,3 +44,27 @@ hogar<- hogar |>select(c("PER", "DIRECTORIO", "SECUENCIA_P", "ORDEN", "P3271", "
 
        
 ACORDARSE DE DE LO DE LA CONSOLA. cd , dir. desktop
+aca para seguuir con la variable de estado civil tuve un error y chat gpt me ayudo por eso creo otra y esta fue la solucion:
+  library(dplyr)
+
+datos <- hogar %>%
+  mutate(estado_civil = case_when(
+    estado_civil == 6 ~ "soltero",
+    estado_civil == 5 ~ "viudo",
+    estado_civil == 4 ~ "separado",
+    estado_civil == 3 ~ "casado",
+    estado_civil == 2 ~ "no casado con pareja +2 años",
+    estado_civil == 1 ~ "no casado con pareja -2 años",
+    TRUE ~ NA
+  ))
+
+ 
+  
+  #ESTO ES LO QUE INTENTE 
+  
+   mutate(estado_civil = case_when(estado_civil == 6 ~ "soltero",
+    estado_civil == 5 ~ "viudo",
+    estado_civil == 4 ~ "separado",
+    estado_civil == 3 ~ "casado",
+    estado_civil == 2 ~ "no casado con pareja +2años",
+    estado_civil == 1 ~ "no casado con pareja -2 años",TRUE ~ NA))
