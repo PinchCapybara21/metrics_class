@@ -45,6 +45,7 @@ hogar<- hogar |>select(c("PER", "DIRECTORIO", "SECUENCIA_P", "ORDEN", "P3271", "
        
 ACORDARSE DE DE LO DE LA CONSOLA. cd , dir. desktop
 aca para seguuir con la variable de estado civil tuve un error y chat gpt me ayudo por eso creo otra y esta fue la solucion:
+ADEMAS debo tener en vcuenta que cuando el R busca mi archivo tien muchos problemas por el nombre tener espacion y etc, tebo tener en cuenta eso al usar este codigo de nuevo
   library(dplyr)
 
 datos <- hogar %>%
