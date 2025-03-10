@@ -1,6 +1,7 @@
 library(tidyverse)
 library(plm)
 library(dplyr)
+#2024
 hogar <- read_delim("C:/Users/Juans/OneDrive/Escritorio/sapa/CSV/generales.CSV")
 fuerza<- read_delim("C:/Users/Juans/OneDrive/Escritorio/sapa/CSV/Fuerzadetrabajo.CSV")
 hogar<- hogar |>select(c("PER", "DIRECTORIO", "SECUENCIA_P", "ORDEN", "P3271", "CLASE",
@@ -54,4 +55,15 @@ fuerza<- fuerza |>select(c("PER", "DIRECTORIO", "SECUENCIA_P", "ORDEN", "CLASE",
          rural_urbano = CLASE,
          actividad_Psemana = P6240) 
 fuerza <- fuerza |>
-  mutate(rural_urbano = ifelse(rural_urbano == 1, "Ur", "Ru"))
+  mutate(rural_urbano = ifelse(rural_urbano == 1, "Ur", "Ru")
+         acitividad_Psemana = case_when(
+           acitividad_Psemana == 1 ~ "trabajando",
+           acitividad_Psemana == 2 ~ "buscando",
+           acitividad_Psemana == 3 ~ "estudiando",
+           acitividad_Psemana == 4 ~ "of_hogar",
+           acitividad_Psemana == 5 ~ "incapacitado",
+           acitividad_Psemana == 6 ~ "otra",
+           TRUE ~ NA
+         ))
+
+#2023
