@@ -1,0 +1,168 @@
+library(tidyverse)
+library(plm)
+library(dplyr)
+
+
+hogar24 <- read_delim("C:/Users/Prsala404/Desktop/Nov_2024/CSV/generales.CSV")
+fuerza24<- read_delim("C:/Users/Prsala404/Desktop/Nov_2024/CSV/fuerza.CSV")
+
+hogar23 <- read_delim("C:/Users/Prsala404/Desktop/Nov_2023/CSV/generales.CSV")
+fuerza23<- read_delim("C:/Users/Prsala404/Desktop/Nov_2023/CSV/fuerza.CSV")
+
+hogar22 <- read_delim("C:/Users/Prsala404/Desktop/Nov_2022/CSV/generales.CSV")
+fuerza22<- read_delim("C:/Users/Prsala404/Desktop/Nov_2022/CSV/fuerza.CSV")
+
+#2024
+hogar24<- hogar24 |>select(c("PER", "DIRECTORIO", "SECUENCIA_P", "ORDEN", "P3271", "CLASE",
+                         "P6040", "P3042", "P6070")) |>
+  rename(year = PER,
+         id_vivienda = DIRECTORIO,
+         id_hogar_viv = SECUENCIA_P,
+         id_ind_hogar_viv = ORDEN,
+         sexo = P3271,
+         rural_urbano = CLASE,
+         edad = P6040,
+         educ = P3042,
+         estado_civil = P6070)
+hogar24 <- hogar24 |>
+  mutate(sexo = ifelse(sexo == 1, "M" , "F"),
+         rural_urbano = ifelse(rural_urbano == 1, "Ur", "Ru"),
+         educ = case_when(
+           educ == 1 ~ "ninguno",
+           educ == 2 ~ "preescolar",
+           educ == 3 ~ "bas_primaria",
+           educ == 4 ~ "bas_sec",
+           educ == 5 ~ "media_acad",
+           educ == 6 ~ "media_tec",
+           educ == 7 ~ "normalista",
+           educ == 8 ~ "tec_prof",
+           educ == 9 ~ "tecnolog",
+           educ == 10 ~ "univ",
+           educ == 11 ~ "especi",
+           educ == 12 ~ "maestria",
+           educ == 13 ~ "phd",
+           TRUE ~ NA),
+         estado_civil = case_when(
+           estado_civil == 6 ~ "soltero",
+           estado_civil == 5 ~ "viudo",
+           estado_civil == 4 ~ "separado",
+           estado_civil == 3 ~ "casado",
+           estado_civil == 2 ~ "libre>2",
+           estado_civil == 1 ~ "libre<2",
+           TRUE ~ NA))
+
+
+#fuerza de trabajo 
+fuerza24<- fuerza24 |>select(c("DIRECTORIO", "SECUENCIA_P", "ORDEN", "FT")) |>
+  rename(id_vivienda = DIRECTORIO,
+         id_hogar_viv = SECUENCIA_P,
+         id_ind_hogar_viv = ORDEN,
+         fuerza_tra = FT
+         ) 
+fuerza24<- fuerza24 |>
+  mutate(fuerza_tra = ifelse(is.na(fuerza_tra), 0, 1))
+
+
+
+
+#2023
+
+hogar23 <- hogar23 |>select(c("PER", "DIRECTORIO", "SECUENCIA_P", "ORDEN", "P3271", "CLASE",
+                            "P6040", "P3042", "P6070")) |>
+  rename(year = PER,
+         id_vivienda = DIRECTORIO,
+         id_hogar_viv = SECUENCIA_P,
+         id_ind_hogar_viv = ORDEN,
+         sexo = P3271,
+         rural_urbano = CLASE,
+         edad = P6040,
+         educ = P3042,
+         estado_civil = P6070)
+hogar23 <- hogar23 |>
+  mutate(sexo = ifelse(sexo == 1, "M" , "F"),
+         rural_urbano = ifelse(rural_urbano == 1, "Ur", "Ru"),
+         educ = case_when(
+           educ == 1 ~ "ninguno",
+           educ == 2 ~ "preescolar",
+           educ == 3 ~ "bas_primaria",
+           educ == 4 ~ "bas_sec",
+           educ == 5 ~ "media_acad",
+           educ == 6 ~ "media_tec",
+           educ == 7 ~ "normalista",
+           educ == 8 ~ "tec_prof",
+           educ == 9 ~ "tecnolog",
+           educ == 10 ~ "univ",
+           educ == 11 ~ "especi",
+           educ == 12 ~ "maestria",
+           educ == 13 ~ "phd",
+           TRUE ~ NA),
+         estado_civil = case_when(
+           estado_civil == 6 ~ "soltero",
+           estado_civil == 5 ~ "viudo",
+           estado_civil == 4 ~ "separado",
+           estado_civil == 3 ~ "casado",
+           estado_civil == 2 ~ "libre>2",
+           estado_civil == 1 ~ "libre<2",
+           TRUE ~ NA))
+
+#fuerza de trabajo 
+fuerza23<- fuerza23 |>select(c("DIRECTORIO", "SECUENCIA_P", "ORDEN", "FT")) |>
+  rename(id_vivienda = DIRECTORIO,
+         id_hogar_viv = SECUENCIA_P,
+         id_ind_hogar_viv = ORDEN,
+         fuerza_tra = FT ) 
+fuerza23 <- fuerza23 |>
+  mutate(fuerza_tra = ifelse(is.na(fuerza_tra), 0, 1))
+
+
+#2022
+
+hogar22 <- hogar22 |>select(c("PER", "DIRECTORIO", "SECUENCIA_P", "ORDEN", "P3271", "CLASE",
+                            "P6040", "P3042", "P6070")) |>
+  rename(year = PER,
+         id_vivienda = DIRECTORIO,
+         id_hogar_viv = SECUENCIA_P,
+         id_ind_hogar_viv = ORDEN,
+         sexo = P3271,
+         rural_urbano = CLASE,
+         edad = P6040,
+         educ = P3042,
+         estado_civil = P6070)
+hogar22 <- hogar22 |>
+  mutate(sexo = ifelse(sexo == 1, "M" , "F"),
+         rural_urbano = ifelse(rural_urbano == 1, "Ur", "Ru"),
+         educ = case_when(
+           educ == 1 ~ "ninguno",
+           educ == 2 ~ "preescolar",
+           educ == 3 ~ "bas_primaria",
+           educ == 4 ~ "bas_sec",
+           educ == 5 ~ "media_acad",
+           educ == 6 ~ "media_tec",
+           educ == 7 ~ "normalista",
+           educ == 8 ~ "tec_prof",
+           educ == 9 ~ "tecnolog",
+           educ == 10 ~ "univ",
+           educ == 11 ~ "especi",
+           educ == 12 ~ "maestria",
+           educ == 13 ~ "phd",
+           TRUE ~ NA),
+         estado_civil = case_when(
+           estado_civil == 6 ~ "soltero",
+           estado_civil == 5 ~ "viudo",
+           estado_civil == 4 ~ "separado",
+           estado_civil == 3 ~ "casado",
+           estado_civil == 2 ~ "libre>2",
+           estado_civil == 1 ~ "libre<2",
+           TRUE ~ NA))
+
+
+
+colnames(hogar)
+#fuerza de trabajo 
+fuerza22<- fuerza22 |>select(c("DIRECTORIO", "SECUENCIA_P", "ORDEN", "FT")) |>
+  rename(id_vivienda = DIRECTORIO,
+         id_hogar_viv = SECUENCIA_P,
+         id_ind_hogar_viv = ORDEN,
+         fuerza_tra = FT ) 
+fuerza22 <- fuerza22 |>
+  mutate(fuerza_tra = ifelse(is.na(fuerza_tra), 0, 1))
