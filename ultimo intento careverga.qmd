@@ -1,0 +1,53 @@
+---
+title: "Primer punto"
+format: html
+editor: visual
+---
+
+## Tabla Comparativa de Coeficientes
+
+|     |
+|-----|
+
+| Variable                         | Modelo con Interacciones | Modelo Simple    |
+|----------------------------------|--------------------------|------------------|
+| Universidad                      | 0.122\*\*\*              | 0.021\*\*\*      |
+| Año 2023                         | 0.007\*\*\*              | 0.007\*\*\*      |
+| Año 2024                         | 0.003                    | 0.001            |
+| Sexo (M)                         | 0.249\*\*\*              | 0.220\*\*\*      |
+| Rural-urbano (Ur)                | 0.048\*\*\*              | \-               |
+| Edad                             | 0.052\*\*\*              | 0.052\*\*\*      |
+| Edad²                            | -0.001\*\*\*             | -0.001\*\*\*     |
+| Universidad \* Año 2023          | -0.006                   | \-               |
+| Universidad \* Año 2024          | -0.018\*\*\*             | \-               |
+| Universidad \* Sexo (M)          | -0.177\*\*\*             | \-               |
+| Universidad \* Rural-urbano (Ur) | -0.020                   | \-               |
+| Constante                        | -0.493\*\*\*             | -0.438\*\*\*     |
+| Observaciones                    | 165,078                  | 165,078          |
+| R²                               | 0.273                    | 0.268            |
+| R² ajustado                      | 0.273                    | 0.268            |
+| Error estándar residual          | 0.415                    | 0.417            |
+| Estadístico F                    | 5,632.753\*\*\*          | 10,058.790\*\*\* |
+
+Notas: \*p\<0.1; \*\*p\<0.05; \*\*\*p\<0.01
+
+|     |
+|-----|
+
+## Análisis Económico
+
+-   Al analizar los dos modelos, podemos notar que los coeficientes cambian significativamente cuando se incluyen las variables de interacción. En el primer modelo, que tiene más controles, el coeficiente de "universidad" es de 0.122, mientras que en el segundo modelo, más simple, baja a 0.021. Esta diferencia se debe a que al añadir interacciones con año, sexo y área rural o urbana, el efecto directo de la universidad se descompone, es decir, deja de ser un promedio general y pasa a depender del grupo específico al que pertenece cada individuo. Por ejemplo, las interacciones revelan que estar en la universidad en 2024 tiene un impacto negativo sobre la fuerza laboral, con un coeficiente de -0.018, lo que podría indicar un contexto particular ese año, quizá una disminución de oportunidades laborales para estudiantes.
+
+    En cuanto a las otras variables, el efecto del año 2023 es prácticamente igual en ambos modelos (0.007), y el de 2024, aunque no significativo en el modelo simple, muestra un efecto negativo cuando se combina con la universidad. El sexo también mantiene un impacto importante: ser hombre aumenta la participación en la fuerza laboral, pero ese efecto disminuye cuando se combina con estar en la universidad, como lo indica el coeficiente de -0.177. Además, vivir en una zona urbana tiene un efecto positivo en el modelo simple (0.048), aunque al combinarse con la universidad, este impacto pierde significancia, sugiriendo que el lugar de residencia no modifica demasiado el efecto de estudiar sobre el empleo.
+
+    En términos de calidad del ajuste, los valores de R² son muy similares: 0.273 en el modelo más complejo y 0.268 en el modelo simple. La diferencia es mínima, lo que indica que agregar interacciones apenas mejora la capacidad del modelo para explicar las variaciones en la fuerza laboral. Además, los errores estándar residuales —0.415 frente a 0.417— refuerzan la idea de que el modelo más elaborado no reduce sustancialmente la dispersión de los errores.
+
+    En conclusión, aunque el modelo con interacciones permite explorar cómo cambian los efectos según el grupo específico —como el impacto negativo de la universidad en 2024 o la relación entre sexo y empleo—, el modelo simple logra casi el mismo nivel de explicación con menos variables. Esto sugiere que el modelo más simple es más eficiente y tiene menos varianza, ya que explica lo esencial sin añadir términos que no aportan valor significativo. Por tanto, si el objetivo es claridad y precisión, el modelo simple parece ser la mejor opción; mientras que el modelo más complejo sería útil solo si se busca entender con mayor detalle las diferencias entre grupos específicos.
+
+-   limitaciones.
+
+    La regresion asume que los errores son homocedásticos y no estan correlacionados, pero si estos supuestos no se cumples, los estimadores podrian ser inconsistentes
+
+    Ademas hay riesgo de variable omitida ya que pueden haber factores no observados como redes de contacto, motivacion, wage de los padres, etc...
+
+    El modelo lineal de probabilidad (LPM) puede predecir valores fuera del rango \[0,1\], lo que es una limitación cuando se trabaja con variables dependientes binarias como la probabilidad de estar empleado.
