@@ -1,0 +1,25 @@
+library(wooldridge)
+library(dplyr)
+library(AER)
+library(tidyverse)
+View(wage2)
+
+df <- wage2 |>
+  select(c(lwage, educ, exper, feduc)) |>
+  mutate(expersq = exper^2) |>
+  drop_na()
+#drop na quita los na
+attach(df)  
+
+ones <- rep(1, dim(df)[1])
+z <- as.matrix(cbind(ones, feduc, exper, expersq))
+x <- as.matrix(cbind(ones, educ, exper, expersq))
+y <- as.matrix(select(df, lwage))
+
+z_x <- t(z) %*% x
+z_x_1 <- solve(z_x)
+z_y <- t(z) %*% y 
+betas <- z_x_1 %*% z_y
+
+model <- ivreg(lwage ~ educ + expersq | feduc + exper + expersq,
+              data = df)
